@@ -1,0 +1,122 @@
+<div class="h-screen w-100 flex">
+  <div class="sidebar w-1/6 h-full text-white">
+      <div class="h-full w-100 rounded-lg bg-yellow-400">sdfds</div>
+  </div>
+  <div class="h-full dashboard flex-auto">
+    <!-- Navigation -->
+    <div class="bg-white p-3 flex items-center justify-between items-center">
+      
+
+      <div class="info flex items-center">
+        <i class="fa fa-bars text-yellow-400"></i>
+        <p class="text-xs md:text-xl ml-5">Welcome, <%= lname %> <%= fname %> </p>
+      </div>
+      
+      <div class="logout flex items-center">
+        <i class="fa fa-power-off"></i>
+        <form action="/logout?_method=DELETE" method="POST" class="ml-3"><button type="submit">Log Out</button></form>
+      </div>
+
+    </div>
+
+    <!-- Operations -->
+    <div class="operation bg-white w-100 my-10 rounded-lg flex flex-col md:flex-row justify-center items-center p-5">
+
+
+
+        <% if(type == "student") { %>
+          <div class="bg-red-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            View Results <i class="fa fa-address-book ml-2"></i>
+          </div>
+    
+          <div onclick="document.location = '/join-class'" class="bg-purple-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Join a Class <i class="fa fa-group ml-2"></i>
+          </div>
+          
+          <div class="bg-green-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Payments <i class="fa fa-money ml-2"></i>
+          </div>
+    
+          <div class="bg-blue-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Make a Complaint <i class="fa fa-tablet ml-2"></i>
+          </div>
+        <% } %> 
+
+        <% if(type == "teacher") { %>
+          <div class="bg-red-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Take Attendance
+          </div>
+    
+          <div onclick="document.location = '/create-class'" class="bg-purple-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Create a Class
+          </div>
+          
+          <div class="bg-green-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Students Projects'
+          </div>
+    
+          <div class="bg-blue-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Letter of Complaint
+          </div>
+        <% } %> 
+
+        <% if(type == "admin") { %>
+          <div onclick="document.location='/register-student'" class="bg-red-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Register Student
+          </div>
+    
+          <div onclick="document.location = '/register-teacher'" class="bg-purple-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Register Teacher
+          </div>
+          
+          <div class="bg-green-500 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Edit Teacher Roles
+          </div>
+    
+          <div class="bg-blue-600 rounded-lg flex justify-center m-5 items-center text-white p-12 w-auto">
+            Edit Calendar
+          </div>
+        <% } %> 
+
+    </div>
+
+    <!-- Info -->
+    
+    <% if(type == "student" || type == "teacher") { %> 
+    <div class="py-5">
+      <div class="bg-white rounded-lg w-100 p-5">
+        <p class="font-bold text-yellow-400">Info <i class="fa fa-info-circle"></i></p>
+        <% if(typeof info == "undefined") { %> 
+          <% if(typeof infoYes == 'undefined') { %> 
+          <p class="mt-3">You have no class to attend!.</p>
+          <p class="text-xs">
+            Refresh <a href="/dashboard" class="text-yellow-500 hover:underline">here <i class="fa fa-refresh"></i></a>.
+          </p>
+          <% } else { %>
+            <% if(type == "student") { %> 
+            <p class="mt-3"><div>The Class "<%= infoYes.course  %>"  is ongoing. The Login Password for all participants is <span class='text-yellow-400 font-bold'>"<%= infoYes.password  %>"</span>.</div>
+              <div class=\"my-2\">Log in to "<%= infoYes.course  %>" <span class="text-yellow-500"><a href="/join-class" class="hover:underline">Here</a> </span>to join.</div></p>
+            <% } %> 
+            <% if(type == "teacher") { %> 
+              <p class="mt-3"><div>The Class "<%= infoYes.course  %>"  is ongoing. The Login Password for all participants is <span class='text-yellow-400 font-bold'>"<%= infoYes.password  %>"</span>.</div>
+                <div class=\"my-2\">Log back in "<%= infoYes.course  %>" <span class="text-yellow-500"><a href="/class/<%= infoYes.link %>" class="hover:underline">Here</a> </span>to join.</div></p>
+              <% } %> 
+          <% } %> 
+  
+        <% } else { %>
+        <% if(type == "student") { %>
+        <p class="mt-3"><div>The Class "<%= info.course  %>"  is ongoing but your teacher hasn't logged in yet. The Login Password for all participants is <span class='text-yellow-400 font-bold'>"<%= info.password  %>"</span>.</div>
+          <div class="my-2">Wait for your teacher to login then Log in to "<%= info.course  %>" <span class="text-yellow-500"><a href="/join-class" class="hover:underline">Here</a> </span>to join.</div></p>
+        <% } %> 
+
+
+        <% if(type == "teacher") { %>
+          <p class="mt-3"><div>The Class "<%= info.course  %>"  is ongoing but students can't login yet. The Login Password for all participants is <span class='text-yellow-400 font-bold'>"<%= info.password  %>"</span>.</div>
+            <div class="my-2">To activate the class "<%= info.course  %>" to enable students login click <span class="text-yellow-500"><a href="/activate-class" target="_blank" class="hover:underline">here</a> </span>to activate.</div></p>
+          <% } %> 
+          <% } %> 
+      </div>
+    </div>
+    <% } %> 
+  </div>
+</div>

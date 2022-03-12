@@ -1,0 +1,116 @@
+
+/* HomePage */
+.bg-homepage {
+	position: relative;
+	background-image: url("/img/milad-fakurian-58Z17lnVS4U.jpg");
+	background-repeat: no-repeat;
+	clip: rect(0, auto, auto, 0);
+	background-position: center center;
+	background-size: cover;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bg-homepage::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.content {
+	z-index: 1;
+}
+/* End */
+
+/* Student Login Page */
+.st-homepage {
+	position: relative;
+	background-image: url("/img/milad-fakurian-58Z17lnVS4U.jpg");
+	background-repeat: no-repeat;
+	clip: rect(0, auto, auto, 0);
+	background-position: center center;
+	background-size: cover;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.st-homepage::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+.st-homepage form {
+	width: 300px;
+}
+
+.st-homepage form input {
+	width: 280px;
+}
+
+.st-homepage form button {
+	width: 280px;
+}
+
+/* End */
+
+/* Dashboard */
+.sidebar {
+	padding: 1em 0 1em 1em;
+	width: 260px !important;
+	position: fixed;
+}
+.dashboard {
+	padding: 1em;
+	margin-left: 260px;
+}
+.operation div {
+	cursor: pointer;
+}
+@media screen and (max-width: 576px) {
+	.sidebar {
+		display: none;
+	}
+	.dashboard {
+		width: 100%;
+		margin-left: 0px;
+	}
+}
+/* End */
+
+/* Join Class */
+.class {
+	width: 300px;
+}
+.class select {
+	-webkit-appearance: none;
+	appearance: none;
+	z-index: 10;
+	position: relative;
+	background: transparent;
+	padding: 10px;
+  cursor: pointer;
+}
+.class .select-wrapper {
+	position: relative;
+  cursor:pointer!important;
+}
+.class .select-wrapper::after {
+	content: "\f078";
+	font-family: "FontAwesome";
+	font-size: 1rem;
+	top: 50%;
+	right: 10px;
+	position: absolute;
+	z-index: 0;
+	transform: translateY(-50%);
+}
+/* End */

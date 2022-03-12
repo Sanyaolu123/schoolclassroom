@@ -1,0 +1,483 @@
+<% if(type == "started") { %>
+<div>
+<% } else { %>
+  <div class="flex w-full justify-center items-center bg-gray-100 
+  <% if(type == "join" || type == "activate") { %>
+  p-5 h-screen
+  <% } else { %>
+  h-auto
+  <% } %>
+  ">
+<% } %>
+
+<% if(type == "join")  { %> 
+
+  <div class="bg-white class h-auto p-3 flex flex-col space-y-5 shadow-xl rounded-lg">
+    <p class="text-center my-5"><%= title  %> </p>
+    <% if(message != "") { %>
+      <% if(message == "success") { %>
+        <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center"><%= message %> <i class="fa fa-check-circle"></i></div> 
+      <% } else { %>  
+      <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+        <% } %> 
+    <% } %>
+    <form action="/join-class" class="flex flex-col space-y-4 px-2 pb-5" method="POST">
+      <div class="select-wrapper shadow-xl bg-gray-200 rounded-lg">
+        <select name="class" id="" class="outline-none w-full rounded-lg">
+          <option selected disabled>Available Classes</option>
+          <% if(typeof info != "undefined") { %>
+            <option value="<%= info.course  %>"><%= info.course  %> - Class</option>
+          <% } %> 
+        </select>
+      </div>
+
+      <input type="text" name="matricClassNo" placeholder="Matric_no" class="border-b-2 border-gray-200 outline-none w-full duration-500 transition focus:border-yellow-400 p-3">
+
+      <input type="password" name="classPassword" placeholder="Enter Class Password" class="border-b-2 border-gray-200 outline-none w-full duration-500 transition focus:border-yellow-400 p-3">
+    
+      <a href="/dashboard" class="block text-center hover:text-yellow-400 transition duration-500">Go back to dashboard</a>
+
+      <button type="submit" class="w-full bg-yellow-400 rounded-lg text-white p-3 hover:bg-yellow-600 transition duration-500 font-bold">Continue <i class="ml-2 fa fa-arrow-right"></i></button>
+    </form>
+  </div>
+<% } else { %> 
+
+
+<% if(type == "create") { %>
+  <div class="py-10">
+    <div class="wrapperClass h-auto bg-white shadow-xl p-5 rounded-lg" style="width:300px;">
+      <p class="text-center my-5"><%= title  %> </p>
+      <% if(message != "") { %>
+        <% if(message == "success") { %>
+          <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center">Class created Successfully! <i class="fa fa-check-circle"></i></div> 
+        <% } else { %>  
+        <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+          <% } %> 
+      <% } %>
+        <form action="/create-class" method="post" enctype="multipart/form-data">
+        <div class="flex flex-col mb-2">
+                <label for="class-course">Course<span class="text-red-500">*</span></label>
+                <input type="text" name="course" id="class-course" class="w-100 outline-none border-b-2 border-gray-400 my-1 transition focus:border-yellow-400" placeholder="e.g science">
+             </div>
+            <div class="flex flex-col mb-2">
+                <label for="class-topic">Topic<span class="text-red-500">*</span></label>
+                <input type="text" name="topic" id="class-topic" class="w-100 outline-none border-b-2 border-gray-400 my-1 transition focus:border-yellow-400" placeholder="e.g Quantum Energy">
+             </div>
+             <div class="flex flex-col my-2">
+                <label for="class-info">Class Info<span class="text-red-500">*</span></label>
+                <textarea name="classInfo" id="class-info" cols="10" rows="10" placeholder="Put Class Information Here." class="my-2 border-yellow-400 border rounded h-20 p-1 outline-none"></textarea>
+             </div>
+             <div class="flex flex-col my-2">
+                <label for="Streaming">Live Streaming<span class="text-red-500">*</span></label>
+                <div class="flex items-center space-x-2">
+                    <input type="radio" name="stream" id="yes" value="yes"><label for="yes">Yes</label>
+                    <input type="radio" name="stream" id="no" value="no"><label for="no">No</label>
+                </div>
+             </div>
+             <div class="flex flex-col my-2">
+                 <label>Class Duration<span class="text-red-500">*</span></label>
+                 <input type="text" name="timeDurate" class="w-100 outline-none border-b-2 border-gray-400 my-1 transition focus:border-yellow-400" placeholder="Class Duration">
+                 <div class="flex items-center space-x-2">
+                     <input type="radio" name="time" id="seconds" value="seconds"> <label for="seconds">Seconds</label>
+                     <input type="radio" name="time" id="minutes" value="minutes"> <label for="minutes">Minutes</label>
+                 </div>
+             </div>
+             <div class="flex flex-col my-2">
+                <label for="Course">Upload Course Notes<span class="text-red-500">*</span></label>
+                <input type="file" name="image" id="Course">
+                <p class="my-1 text-red-500">***You are advised to include every information needed by students in the uploaded file!***</p>
+             </div>
+             <a href="/dashboard" class="block text-center hover:text-yellow-400 transition duration-500 my-2">Go back to dashboard</a>
+             <button class="my-2 w-100 text-center p-3 bg-yellow-400 rounded-lg shadow-xl hover:bg-yellow-600 transition duration-500 text-white font-bold" style="width:100%;" type="submit">CREATE <i class="fa fa-plus-circle"></i></button>
+        </form>
+    </div>
+    </div>
+<% } %> 
+<% } %> 
+
+<% if(type == "activate") { %>
+  <div class="wrappertr bg-white shadow-xl p-5 rounded" style="width:300px;">
+    <p class="text-center my-5"><%= title  %> </p>
+    <% if(message != "") { %>
+      <% if(message == "success") { %>
+        <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center"><%= message %> <i class="fa fa-check-circle"></i></div> 
+      <% } else { %>  
+      <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+        <% } %> 
+    <% } %>
+    <form action="/activate-class" class="flex flex-col space-y-4 my-4" method="post">
+        <div>
+        <input type='text' name='username' class='outline-none border-b-2 transition focus:border-yellow-400 p-2' style='width:100%' placeholder='Reg_no'/>
+        </div>
+
+        <div>
+        <input type="password" name="password" class="outline-none border-b-2 border-gray-200 transition focus:border-yellow-500 p-2" style="width:100%" placeholder="Enter Class Password">
+        </div>
+        <a class="my-1 block w-100 text-center text-blue-500" href="/dashboard">Go back to dashboard</a>
+        <p class="text-center text-red-500 font-bold">***Note if you login the time starts and when it is over, all session expires!***</p>
+        <button type="submit" class="bg-yellow-400 rounded text-white p-2 font-bold transition hover:bg-yellow-600 duration-500">Continue <i class="fa fa-arrow-right transition hover:ml-5 duration-500"></i></button>
+        
+    </form>
+</div>
+<% } %> 
+
+<% if(type == "started") { %>
+
+
+  <div class="header py-2 px-5 flex justify-between items-center w-100">
+    <!-- <div class="logo flex justify-between items-center"> -->
+      <div class="header__back">
+        <i class="fas fa-angle-left"></i>
+      </div>
+      <h3>Video Chat</h3>
+
+
+      <div>
+        <div class="dropdown relative">
+          <button
+            class="
+              dropdown-toggle
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg active:text-white
+              transition
+              duration-150
+              ease-in-out
+              flex
+              items-center
+              whitespace-nowrap
+            "
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Menu
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="caret-down"
+              class="w-2 ml-2"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+            >
+              <path
+                fill="currentColor"
+                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+              ></path>
+            </svg>
+          </button>
+          <ul
+            class="
+              dropdown-menu
+              min-w-max
+              absolute
+              hidden
+              bg-white
+              text-base
+              z-50
+              float-left
+              py-2
+              list-none
+              text-left
+              rounded-lg
+              shadow-lg
+              mt-1
+              hidden
+              m-0
+              bg-clip-padding
+              border-none
+            "
+            aria-labelledby="dropdownMenuButton"
+          >
+
+            <li>
+              <a
+                class="
+                  dropdown-item
+                  text-sm
+                  py-2
+                  px-4
+                  font-normal
+                  block
+                  w-full
+                  whitespace-nowrap
+                  bg-transparent
+                  text-gray-700
+                  hover:bg-gray-100
+                "
+                href="#"
+                id="chat"
+                >Chat</a
+              >
+            </li>
+            <li>
+              <a
+                class="
+                  dropdown-item
+                  text-sm
+                  py-2
+                  px-4
+                  font-normal
+                  block
+                  w-full
+                  whitespace-nowrap
+                  bg-transparent
+                  text-gray-700
+                  hover:bg-gray-100
+                "
+                href="#"
+                id="participants"
+                >Participants</a
+              >
+            </li>
+            <li>
+              <a
+                class="
+                  dropdown-item
+                  text-sm
+                  py-2
+                  px-4
+                  font-normal
+                  block
+                  w-full
+                  whitespace-nowrap
+                  bg-transparent
+                  text-gray-700
+                  hover:bg-gray-100
+                "
+                href="#"
+                id="documents"
+                >Documents</a
+              >
+            </li>
+            <li>
+              <a
+                class="
+                  dropdown-item
+                  text-sm
+                  py-2
+                  px-4
+                  font-normal
+                  block
+                  w-full
+                  whitespace-nowrap
+                  bg-transparent
+                  text-gray-700
+                  hover:bg-gray-100
+                "
+                href="#"
+                id="classInfo"
+                >Class Info</a
+              >
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+        
+        
+
+
+    <!-- </div> -->
+  </div>  
+  <div class="main">  
+  <div class="main__left">
+    <div class="videos__group">
+      <div id="video-grid">
+
+      </div>
+    </div>
+    <div class="options">
+      <div class="options__left">
+        <div
+            class="options__button"
+            id="playPauseVideo"
+            onclick="playStop()"
+          >
+          <i class="fa fa-video"></i>
+        </div>
+        <div id="muteButton" class="options__button" id="muteButton"
+        onclick="muteUnmute()">
+          <i class="fa fa-microphone"></i>
+        </div>
+        <div id="showChat" class="options__button">
+          <i class="fa fa-comment"></i>
+        </div>
+      </div>
+      <div class="options__right">
+        <div id="inviteButton" class="options__button">
+          <i class="fas fa-user-plus"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main__right">
+
+        <div class="classInfo hidden flex justify-center h-screen items-center font-bold">
+          <span class="message">
+            <span class="flex justify-center items-center flex-col space-y-4">
+              <h1>Information</h1>
+              <hr>
+              <h3>Teacher</h3>
+              <p style="color: #2f80ec; cursor:pointer;" class="hover:underline">=><%= teacher %></p>
+              <h3>Topic</h3>
+              <p style="color: #2f80ec; cursor:pointer;" class="hover:underline">=><%= topic %></p>
+              <h3>Class Information</h3>
+              <p style="color: #2f80ec; cursor:pointer;" class="hover:underline">=><%= classInfo %></p>
+            </span>
+          </span>
+        </div>
+
+        <div class="participants hidden flex justify-center h-screen items-center font-bold">
+          <span class="message">
+            <span class="flex justify-center items-center flex-col py-40">
+              <span class="count text-2xl"></span><br />
+              <h1 class="text-2xl">Participant(s)</h1>
+            </span>
+          </span>
+        </div>
+
+        <div class="documents hidden flex justify-center h-screen items-center font-bold">
+          <span class="message">
+            <span class="flex justify-center items-center flex-col">
+              <p>Uploaded Documents</p>
+              <a style="color: #2f80ec;" class="hover:underline" href="/pdfs/<%= documents %>" download = "<%= course %> - class pdf">=> <%= documents %></a>
+            </span>
+          </span>
+        </div>
+
+
+        <div class="main__chat_window" id="main__chat_window">
+          <div class="flex justify-center items-center h-auto flex-col space-y-5 m-place" style="padding-top: 6rem;">
+            <img src="/undraw_chatting_re_j55r.svg" style="width:250px; height:300px;" />
+            <p class="text-2xl text-white">Start by typing a message..</p>
+          </div>
+          <ul class="messages" id="all_messages">
+
+          </ul>
+        </div>
+        <div class="main__message_container">
+          <input id="chat_message" class="" type="text" autocomplete="off" placeholder="Type message here and press enter...">
+        </div>
+
+    
+  </div>
+</div>
+
+<script src="/jquery.min.js"></script>
+<script>
+  $("#dropdownMenuButton").click(() => {
+    $(".dropdown-menu").toggleClass("hidden");
+    // $(".main__chat_window").addClass("hidden");
+    // $(".main__message_container").addClass("hidden")
+    // $("#chat_message").addClass("hidden")
+  })
+
+
+  // $("#dropdownMenuButton").focusout(function() => {
+  //   $(".dropdown-menu").addClass("hidden");
+  //   // $(".main__chat_window").addClass("hidden");
+  //   // $(".main__message_container").addClass("hidden")
+  //   // $("#chat_message").addClass("hidden")
+  // })
+    // if(document.querySelector(".main__right").style.display == "flex";)
+  // $("#dropdownMenuButton").click(() => {
+  //   $(".dropdown-menu").addClass("hidden");
+  //   // $(".main__chat_window").addClass("hidden");
+  //   // $(".main__message_container").addClass("hidden")
+  //   // $("#chat_message").addClass("hidden")
+  // })
+  
+  function setMenuPage(){
+    if(getComputedStyle(document.querySelector(".main__right")).display == "none"){
+      document.querySelector(".main__right").style.display = "flex";
+	document.querySelector(".main__right").style.flex = "1";
+	document.querySelector(".main__left").style.display = "none";
+	document.querySelector(".header__back").style.display = "block";
+  }
+  }
+
+  $("#classInfo").click(() => {
+    setMenuPage();
+    $(".classInfo").removeClass("hidden").addClass("visible");
+    $(".participants").removeClass("visible").addClass("hidden");
+    $(".documents").removeClass("visible").addClass("hidden");
+    $(".main__chat_window").removeClass("visible").addClass("hidden");
+    $(".main__message_container").removeClass("visible").addClass("hidden");
+    $("#chat_message").removeClass("visible").addClass("hidden");
+  })
+
+  $("#participants").click(() => {
+    setMenuPage();
+    $(".classInfo").removeClass("visible").addClass("hidden");
+    $(".participants").removeClass("hidden").addClass("visible");
+    $(".documents").removeClass("visible").addClass("hidden");
+    $(".main__chat_window").removeClass("visible").addClass("hidden");
+    $(".main__message_container").removeClass("visible").addClass("hidden");
+    $("#chat_message").removeClass("visible").addClass("hidden");
+  })
+
+  $("#chat").click(() => {
+    setMenuPage();
+    $(".classInfo").removeClass("visible").addClass("hidden");
+    $(".participants").removeClass("visible").addClass("hidden");
+    $(".documents").removeClass("visible").addClass("hidden");
+
+    var element = document.getElementById("all_messages");
+				var numberOfChildren = element.children.length
+				if(numberOfChildren > 0){
+					$(".m-place").addClass("hidden");
+				}
+
+    $(".main__chat_window").removeClass("hidden").addClass("visible");
+    $(".main__message_container").removeClass("hidden").addClass("visible");
+    $("#chat_message").removeClass("hidden").addClass("visible");
+  })
+
+  $("#documents").click(() => {
+    setMenuPage();
+    $(".classInfo").removeClass("visible").addClass("hidden");
+    $(".participants").removeClass("visible").addClass("hidden");
+    $(".documents").removeClass("hidden").addClass("visible");
+    $(".main__chat_window").removeClass("visible").addClass("hidden");
+    $(".main__message_container").removeClass("visible").addClass("hidden");
+    $("#chat_message").removeClass("visible").addClass("hidden");
+  })
+
+
+</script>
+<!-- <script src="/tabbar.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/2.0.0-beta.3/peerjs.min.js" integrity="sha512-/b9G70XUEYGTOv2bh4ZKwvysh6pIwvrfXOkuVIvmg5nwfuJZoSH0a4MD1rF92SmQtDz4W+e3MiX9niGw15kaPw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/2.0.0-beta.3/peerjs.min.js.map"></script> -->
+<script src="/peerjs.min.js"></script>
+<script src="/peerjs.min.js.map"></script>
+<script src="/socket.io/socket.io.js"></script>
+<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+<script>
+
+  const ROOM_ID = "<%= roomId %>";
+  let fname_user = "<%= fname %>";
+  let lname_user = "<%= lname %>";
+  let gender_user = "<%= gender %>";
+  let type_user = "<%= joinType %>";
+  let expirytime = "<%= classTime %>";
+  let StreamOption = "<%= liveStream %>";
+  let sir = "Mr. ";
+  let ma = "Mrs. ";
+</script>
+<script src="/script.js"></script>
+<% } %> 
+</div>

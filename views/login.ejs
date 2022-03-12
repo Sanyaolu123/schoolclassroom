@@ -1,0 +1,72 @@
+<div class="st-homepage">
+  <div class="content">
+
+    
+      <% if(type == "student")  { %>
+        <form action="/student-login" method="POST" class="student flex flex-col justify-center items-center space-y-3 w-100 border border-gray-200 p-2">
+          <h3 class="text-center my-2 text-white text-xl font-bold"><%= header  %> </h3>
+          <% if (messages.error) { %>
+
+            <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= messages.error %> <i class="fa fa-exclamation-triangle"></i></div>
+          
+          <% } %>
+
+        <div class="form-group" class="flex flex-col justify-center items-center space-y-2">
+          <input type="text" name="username" id="matric-no" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Matric Number">
+        </div>
+
+        <div class="" class="">
+          <input type="password" name="password" id="password" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Password">
+          
+        </div>
+      <% } %> 
+
+      <% if(type == "teacher")  { %>
+        <form action="/teacher-login" method="POST" class="student flex flex-col justify-center items-center space-y-3 w-100 border border-gray-200 p-2">
+          <h3 class="text-center my-2 text-white text-xl font-bold"><%= header  %> </h3>
+
+          <% if (messages.error) { %>
+
+            <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= messages.error %> <i class="fa fa-exclamation-triangle"></i></div>
+          
+          <% } %>
+
+        <div class="form-group" class="flex flex-col justify-center items-center space-y-2">
+          <input type="text" name="username" id="reg-no" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Registration Number">
+        </div>
+  
+        <div class="" class="">
+          <input type="password" name="password" id="password" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Password">
+          
+        </div>
+      <% } %> 
+
+      <% if(type == "admin")  { %>
+        <form action="/admin-login" method="POST" class="student flex flex-col justify-center items-center space-y-3 w-100 border border-gray-200 p-2">
+          <h3 class="text-center my-2 text-white text-xl font-bold"><%= header  %> </h3>
+
+          <% if (messages.error) { %>
+
+            <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= messages.error %> <i class="fa fa-exclamation-triangle"></i></div>
+          
+          <% } %>
+
+        <div class="form-group" class="flex flex-col justify-center items-center space-y-2">
+          <input type="text" name="username" id="username" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Username">
+        </div>
+  
+        <div class="" class="">
+          <input type="password" name="password" id="password" class="border-b-2 focus:border-green-500 transition duration-500 border-gray-400 w-100 p-3 outline-none bg-gray-100 rounded" placeholder="Password">
+          
+        </div>
+      <% } %> 
+
+      <% if(type == "student" || type == "teacher")  { %>
+        <p class="text-white text-center">***Note your password is your surname in small letters***</p>
+      <% } %> 
+      
+      <a href="/" class="block text-center text-white hover:text-green-500 transition duration-200 font-bold">Go back</a>
+      <button type="submit" class="bg-green-500 w-100 p-3 border-none rounded text-white font-bold hover:bg-green-700 transition duration-500">Login</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title
+			><%= typeof title != "undefined" ? title: "Online Class for all" %></title
+		>
+		<link
+		rel="stylesheet"
+		href="/font-awesome-latest/css/all.min.css"
+	/>
+	<% if(title == "Class is Ongoing") { %>
+		<link rel="stylesheet" href="/tailwind/tailwind.min.css" />
+		    <link rel="stylesheet" href="/video-style.css">
+				<link rel="stylesheet" href="/tabbar.css">
+	<% } else { %>
+		<link rel="stylesheet" href="/tailwind/tailwind.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
+	<% } %> 
+	</head>
+	<% if(title == "Class is Ongoing") { %>
+		<body>
+	<% } else { %>
+		<body class="h-screen w-100 <% if(typeof init !== "undefined" && init.length > 0) { %>  bg-gray-200 <% } %> ">
+	<% } %>
+		<%-body-%>
+	</body>
+</html>

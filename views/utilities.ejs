@@ -1,0 +1,20 @@
+<% if (type == "expired") { %>
+  <div class="flex w-full justify-center items-center h-screen bg-gray-200"> 
+    <div class="bg-white h-auto p-5 rounded-lg shadow-lg flex flex-col space-y-5">
+      <p><i class="fas fa-info-circle text-center block text-yellow-500 text-2xl"></i></p>
+      <p class="text-xl">This class has expired</p>
+      <p class="text-xs text-center"><a href="/dashboard" class="text-black hover:text-yellow-500 transition duration-500">Dashboard?</a></p>
+    </div>
+  </div>  
+<% } %> 
+
+<% if (type == "brokenLink") { %>
+  <div class="flex w-full justify-center items-center h-screen bg-gray-200"> 
+    <div class="bg-white h-auto p-5 rounded-lg shadow-lg flex flex-col space-y-5">
+      <p><i class="fas fa-unlink text-center block text-yellow-500 text-2xl"></i></p>
+      <p class="text-xl">This Class Link is Broken</p>
+      <p class="text-center"></p>
+      <p class="text-xs text-center"><a href="/dashboard" class="text-black hover:text-yellow-500 transition duration-500">Dashboard?</a></p>
+    </div>
+  </div>
+<% } %> 
