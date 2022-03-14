@@ -31,11 +31,8 @@ async function getStudentsData() {
 
 getStudentsData();
 
-// Connect to db
-// const connect = mongoose.connect("mongodb+srv://Abideen:72692658@cluster0.7vaoi.mongodb.net/schoolclassroom?retryWrites=true&w=majority", {
-// 	useNewUrlParser: true,
-// 	useUnifiedTopology: true,
-// });
+// Connect to local mongodb
+
 
 const connect = mongoose.connect("mongodb://localhost/school", {
 	useNewUrlParser: true,
