@@ -37,7 +37,7 @@ getStudentsData();
 // 	useUnifiedTopology: true,
 // });
 
-const connect = mongoose.connect("mongodb+srv://Abideen:72692658@cluster0.7vaoi.mongodb.net/schoolclassroom?retryWrites=true&w=majority", {
+const connect = mongoose.connect("mongodb://localhost/school", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
