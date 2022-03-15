@@ -251,8 +251,8 @@ exports.PostRegisterStudent = async (req, res) => {
 		});
 	} catch (error) {
 		res.render("register", {
-			title: "Register Teacher",
-			type: "teacher",
+			title: "Register Student",
+			type: "student",
 			message: error,
 		});
 	}

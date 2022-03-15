@@ -15,7 +15,6 @@ router.get("/teacher-login", checkNotAuthenticated, controller.teacherLogin);
 router.get("/admin-login", checkNotAuthenticated, controller.adminLogin);
 router.get("/admin-register", checkNotAuthenticated, controller.adminRegister);
 
-
 router.get(
 	"/join-class",
 	checkAuthenticated,
@@ -47,7 +46,6 @@ router.get(
 	controller.RegisterTeacher
 );
 router.get("/dashboard", checkAuthenticated, controller.dashboard);
-
 
 //Post
 router.post(
@@ -121,7 +119,6 @@ async function getStudentData(req, res, next) {
 			username: req.body.username,
 		}).limit();
 
-
 		initialized(
 			passport,
 			(username) => studentsData.find((user) => user.username === username),
@@ -140,7 +137,6 @@ async function getAdminData(req, res, next) {
 			username: req.body.username,
 		}).limit();
 
-
 		initialized(
 			passport,
 			(username) => adminData.find((user) => user.username === username),
@@ -158,7 +154,6 @@ async function getteacherData(req, res, next) {
 		const teacherData = await Teachers.find({
 			username: req.body.username,
 		}).limit();
-
 
 		initialized(
 			passport,
