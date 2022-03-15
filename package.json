@@ -270,5 +270,8 @@
   "bugs": {
     "url": "https://github.com/Sanyaolu123/schoolclassroom/issues"
   },
-  "homepage": "https://github.com/Sanyaolu123/schoolclassroom#readme"
+  "homepage": "https://github.com/Sanyaolu123/schoolclassroom#readme",
+  "engines" : { 
+    "node" : ">=8.0.0 <14.0.0" 
+  }
 }
