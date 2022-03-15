@@ -14,22 +14,6 @@ const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
-async function getStudentsData() {
-	// const studentsData = await Students.find({ type: "student" }).limit();
-	// const adminsData = await Admins.find({ type: "admin" }).limit();
-	// // let users = studentsData || adminsData;
-	// const users = [].concat(studentsData, adminsData);
-	// // For Students
-	// initialized(
-	// 	passport,
-	// 	(username) => users.find((user) => user.username === username),
-	// 	(id) => users.find((user) => user.timeId === id)
-	// );
-	// let userer = users.find(item => item.type === "admin");
-	// console.log(userer.gender);
-}
-
-getStudentsData();
 
 // Connect to local mongodb
 
@@ -52,8 +36,7 @@ app.use(
 	session({
 		secret: "School Lab",
 		resave: false,
-		saveUninitialized: false,
-		// cookie:{maxAge : (5 * 60 * 1000)},
+		saveUninitialized: false
 	})
 );
 
@@ -64,14 +47,6 @@ app.use(passport.session());
 
 app.use(methodOverride("_method"));
 
-// app.use((req, res, next) => {
-// 	res.locals.error = req.flash("error")
-// })
-// const getClassInfo = classRouter.getClassInfo;
-
-// routerSess.post("/class/activate-class", getClassInfo, classRouter.classActivate);
-
-// app.use("/", router);
 
 app.use("/", router)
 
@@ -85,7 +60,6 @@ app.use("/class", classRouter)
 
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId, userName) => {
-		// console.log(roomId, userId, userName)
     socket.join(roomId);
     socket.to(roomId).emit("user-connected", userId);
 
