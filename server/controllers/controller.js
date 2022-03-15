@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const app = require("express")();
 const StudentRegistration = require("../models/RegisterStudent");
 const TeacherRegistration = require("../models/RegisterTeacher");
+const AdminRegistration = require("../models/RegisterAdmin");
 const ClassRegistration = require("../models/CreateClass");
 const crypto = require("crypto");
 const flash = require("express-flash");
@@ -44,7 +45,10 @@ exports.dashboard = async (req, res) => {
 			});
 			// res.redirect("/")
 		} else {
-			if (searchCourseRole.teacherLogin == "no" && searchCourseRole.expired == "no") {
+			if (
+				searchCourseRole.teacherLogin == "no" &&
+				searchCourseRole.expired == "no"
+			) {
 				res.render("dashboard", {
 					title: "Dashboard",
 					init: "dashboard",
@@ -54,28 +58,30 @@ exports.dashboard = async (req, res) => {
 					username: req.user.username,
 					info: searchCourseRole,
 				});
-			}else{
-
-			if (searchCourseRole.teacherLogin == "yes" && searchCourseRole.expired == "no") {
-				res.render("dashboard", {
-					title: "Dashboard",
-					init: "dashboard",
-					type: req.user.type,
-					fname: req.user.fname,
-					lname: req.user.lname,
-					username: req.user.username,
-					infoYes: searchCourseRole,
-				});
-			}else{
-				res.render("dashboard", {
-					title: "Dashboard",
-					init: "dashboard",
-					type: req.user.type,
-					fname: req.user.fname,
-					lname: req.user.lname,
-					username: req.user.username,
-				});
-			}
+			} else {
+				if (
+					searchCourseRole.teacherLogin == "yes" &&
+					searchCourseRole.expired == "no"
+				) {
+					res.render("dashboard", {
+						title: "Dashboard",
+						init: "dashboard",
+						type: req.user.type,
+						fname: req.user.fname,
+						lname: req.user.lname,
+						username: req.user.username,
+						infoYes: searchCourseRole,
+					});
+				} else {
+					res.render("dashboard", {
+						title: "Dashboard",
+						init: "dashboard",
+						type: req.user.type,
+						fname: req.user.fname,
+						lname: req.user.lname,
+						username: req.user.username,
+					});
+				}
 			}
 		}
 	} catch (error) {
@@ -132,14 +138,21 @@ exports.JoinClass = async (req, res) => {
 		if (typeof searchCourse.teacherLogin == "undefined") {
 			res.render("class", { title: "Join Class", type: "join", message: "" });
 		} else {
-			try{
+			try {
 				if (
-					searchCourse.teacherLogin == "no" && searchCourse.expired == "no" ||
-					searchCourse.teacherLogin == "yes" && searchCourse.expired == "yes"
+					(searchCourse.teacherLogin == "no" && searchCourse.expired == "no") ||
+					(searchCourse.teacherLogin == "yes" && searchCourse.expired == "yes")
 				) {
-					res.render("class", { title: "Join Class", type: "join", message: "" });
+					res.render("class", {
+						title: "Join Class",
+						type: "join",
+						message: "",
+					});
 				} else {
-					if(searchCourse.teacherLogin == "yes" && searchCourse.expired == "no"){
+					if (
+						searchCourse.teacherLogin == "yes" &&
+						searchCourse.expired == "no"
+					) {
 						res.render("class", {
 							title: "Join Class",
 							type: "join",
@@ -148,19 +161,30 @@ exports.JoinClass = async (req, res) => {
 						});
 					}
 				}
-			}
-			catch(error){
-				console.log(error)
+			} catch (error) {
+				console.log(error);
 			}
 		}
-	} catch (error) {console.log(error)}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+exports.adminRegister = (req, res) => {
+	res.render("register", {
+		title: "Register Admin",
+		type: "admin",
+		message: "",
+		password: "",
+		username: "",
+	});
 };
 
 /**
  *
  *Create Class
  */
-exports.createClass = async (req, res) => {
+exports.createClass = (req, res) => {
 	res.render("class", { title: "Create a Class", type: "create", message: "" });
 };
 
@@ -181,16 +205,15 @@ exports.activateClass = async (req, res) => {
  *Register Student
  */
 exports.RegisterStudent = async (req, res) => {
-	res.render("register", { title: "Register Student", type: "student" });
+	res.render("register", { title: "Register Student", type: "student", message: "" });
 };
-
 
 /**
  *
  *Get Register Teacher
  */
 exports.RegisterTeacher = async (req, res) => {
-	res.render("register", { title: "Register Teacher", type: "teacher" });
+	res.render("register", { title: "Register Teacher", type: "teacher", message: "" });
 };
 
 // POSTS
@@ -224,7 +247,7 @@ exports.PostRegisterStudent = async (req, res) => {
 		res.render("register", {
 			title: "Register Student",
 			type: "student",
-			message: "Student Registered Successfully!",
+			message: "success",
 		});
 	} catch (error) {
 		res.render("register", {
@@ -260,13 +283,58 @@ exports.PostRegisterTeacher = async (req, res) => {
 		res.render("register", {
 			title: "Register Teacher",
 			type: "teacher",
-			message: "Teacher Registered Successfully!",
+			message: "success",
 		});
 	} catch (error) {
 		res.render("register", {
 			title: "Register Teacher",
 			type: "teacher",
 			message: error,
+		});
+	}
+};
+
+/**
+ *
+ *Post Register Admin
+ */
+
+exports.PostRegisterAdmin = async (req, res) => {
+	try {
+		function bin2hex(bytesLength) {
+			let bin = crypto.randomBytes(bytesLength);
+			return new Buffer(bin).toString("hex");
+		}
+		let generatedpass = bin2hex(3);
+		let username = "ADM" + Date.now();
+		const admin = new AdminRegistration({
+			timeId: Date.now(),
+			username: username,
+			fname: req.body.fname,
+			mname: req.body.mname,
+			lname: req.body.lname,
+			gender: req.body.gender,
+			date: req.body.dob,
+			type: "admin",
+			password: await bcrypt.hash(generatedpass, 10),
+		});
+
+		await admin.save();
+
+		res.render("register", {
+			title: "Register Admin",
+			type: "admin",
+			message: "success",
+			password: generatedpass,
+			username: username,
+		});
+	} catch (error) {
+		res.render("register", {
+			title: "Register Admin",
+			type: "admin",
+			message: error,
+			password: "",
+			username: "",
 		});
 	}
 };
@@ -348,10 +416,8 @@ exports.sendToClass = async (req, res) => {
 		const classDetails = await ClassRegistration.find({
 			course: course,
 		});
-		let searchTerm = classDetails.find(
-			(searchC) => searchC.course === course
-		);
-		// console.log(searchTerm.classDuration);
+		let searchTerm = classDetails.find((searchC) => searchC.course === course);
+
 		function getClassTime(duration, term) {
 			if (term == "minutes") {
 				const classtime = duration * 60 * 1000;
@@ -365,45 +431,40 @@ exports.sendToClass = async (req, res) => {
 		}
 
 		let roomId = req.params.room;
-		if(roomId.length != "36"){
-			res.render("utilities", { title: "Broken Class Link", type: "brokenLink" })
-		}else{
-			// let regno = searchTerm
-			// const teacherDetails = await ClassRegistration.find({
-			// 	course: course,
-			// });
-		// let classtime = getClassTime(searchTerm.classDuration, searchTerm.Durate);
-		res.render("class", {
-			title: "Class is Ongoing",
-			type: "started",
-			roomId: req.params.room,
-			fname: req.user.fname,
-			lname: req.user.lname,
-			topic: searchTerm.topic,
-			gender: req.user.gender,
-			liveStream: searchTerm.LiveStream,
-			joinType: req.user.type,
-			course: searchTerm.course,
-			teacher: searchTerm.teacher,
-			classInfo: searchTerm.classInfo,
-			documents: searchTerm.document,
-			classTime: getClassTime(searchTerm.classDuration, searchTerm.Durate),
-		});
+		if (roomId.length != "36") {
+			res.render("utilities", {
+				title: "Broken Class Link",
+				type: "brokenLink",
+			});
+		} else {
+			res.render("class", {
+				title: "Class is Ongoing",
+				type: "started",
+				roomId: req.params.room,
+				fname: req.user.fname,
+				lname: req.user.lname,
+				topic: searchTerm.topic,
+				gender: req.user.gender,
+				liveStream: searchTerm.LiveStream,
+				joinType: req.user.type,
+				course: searchTerm.course,
+				teacher: searchTerm.teacher,
+				classInfo: searchTerm.classInfo,
+				documents: searchTerm.document,
+				classTime: getClassTime(searchTerm.classDuration, searchTerm.Durate),
+			});
 		}
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-
 exports.expiredClass = async (req, res) => {
 	res.render("utilities", { title: "Expired Class", type: "expired" });
 };
 
-
-
 exports.getClassStatus = async (req, res) => {
-	try{
+	try {
 		const classData = await Class.find({
 			course: req.user.role,
 		}).limit();
@@ -417,19 +478,17 @@ exports.getClassStatus = async (req, res) => {
 			);
 			result.n;
 			result.nModified;
-			if(result){
-				res.send("success")
+			if (result) {
+				res.send("success");
 			}
 		}
+	} catch (error) {
+		console.log(error);
 	}
-	catch(error){
-		console.log(error)
-	}
-}
-
+};
 
 exports.checkClassExpiry = async (req, res) => {
-	try{
+	try {
 		let course = req.user.course || req.user.role;
 		const classData = await Class.find({
 			course: course,
@@ -438,17 +497,15 @@ exports.checkClassExpiry = async (req, res) => {
 			(classDetails) => classDetails.course === course
 		);
 
-		if(searchTerm.expired == "yes"){
-			res.send("expired")
-		}else{
-			res.send("not expired")
+		if (searchTerm.expired == "yes") {
+			res.send("expired");
+		} else {
+			res.send("not expired");
 		}
+	} catch (error) {
+		console.log(error);
 	}
-	catch(error){
-		console.log(error)
-	}
-}
-
+};
 
 /**
  *
@@ -614,16 +671,15 @@ async function execCreateClass(req, res) {
 			let teacher_lname = req.user.lname;
 			let gender = req.user.gender;
 
-			function getTeacher(){
-				if(gender == "female"){
-					let teacher = `Mrs. ${teacher_fname} ${teacher_lname}`; 
+			function getTeacher() {
+				if (gender == "female") {
+					let teacher = `Mrs. ${teacher_fname} ${teacher_lname}`;
 					return teacher;
-				}else{
-					let teacher = `Mr. ${teacher_fname} ${teacher_lname}`; 
+				} else {
+					let teacher = `Mr. ${teacher_fname} ${teacher_lname}`;
 					return teacher;
 				}
 			}
-			
 
 			const registerClass = new ClassRegistration({
 				timeId: Date.now(),

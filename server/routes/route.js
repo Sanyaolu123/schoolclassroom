@@ -8,15 +8,14 @@ const Students = require("../models/RegisterStudent");
 const Admins = require("../models/RegisterAdmin");
 const Teachers = require("../models/RegisterTeacher");
 
-
-
 //Get
 router.get("/", controller.homepage);
 router.get("/student-login", checkNotAuthenticated, controller.studentLogin);
 router.get("/teacher-login", checkNotAuthenticated, controller.teacherLogin);
-router.get("/admin-login", checkNotAuthenticated, controller.adminLogin); 
+router.get("/admin-login", checkNotAuthenticated, controller.adminLogin);
+router.get("/admin-register", checkNotAuthenticated, controller.adminRegister);
 
-// router.get("/expired", checkAuthenticated, controller.expiredClass)
+
 router.get(
 	"/join-class",
 	checkAuthenticated,
@@ -48,7 +47,7 @@ router.get(
 	controller.RegisterTeacher
 );
 router.get("/dashboard", checkAuthenticated, controller.dashboard);
-// router.get("/:room", checkAuthenticated, controller.sendToClass)
+
 
 //Post
 router.post(
@@ -70,7 +69,6 @@ router.post(
 	})
 );
 
-
 router.post(
 	"/admin-login",
 	getAdminData,
@@ -81,13 +79,13 @@ router.post(
 	})
 );
 
-
 router.post("/register-student", controller.PostRegisterStudent);
 router.post("/register-teacher", controller.PostRegisterTeacher);
+router.post("/register-admin", controller.PostRegisterAdmin);
 router.post("/create-class", controller.PostCreateClass);
 router.post("/join-class", controller.PostJoinClass);
-router.post("/getclassstatus", controller.getClassStatus)
-router.post("/checkclassexpiry", controller.checkClassExpiry)
+router.post("/getclassstatus", controller.getClassStatus);
+router.post("/checkclassexpiry", controller.checkClassExpiry);
 
 router.post("/activate-class", controller.PostActivateClass);
 
@@ -95,7 +93,6 @@ router.delete("/logout", (req, res) => {
 	req.logOut();
 	res.redirect("/");
 });
-
 
 function checkAdminValidation(req, res, next) {
 	if (req.user.type != "admin") {
@@ -123,7 +120,7 @@ async function getStudentData(req, res, next) {
 		const studentsData = await Students.find({
 			username: req.body.username,
 		}).limit();
-		// const users = studentsData;
+
 
 		initialized(
 			passport,
@@ -137,16 +134,12 @@ async function getStudentData(req, res, next) {
 	next();
 }
 
-
-
-
-
 async function getAdminData(req, res, next) {
 	try {
 		const adminData = await Admins.find({
 			username: req.body.username,
 		}).limit();
-		// const users = studentsData;
+
 
 		initialized(
 			passport,
@@ -165,7 +158,7 @@ async function getteacherData(req, res, next) {
 		const teacherData = await Teachers.find({
 			username: req.body.username,
 		}).limit();
-		// const users = studentsData;
+
 
 		initialized(
 			passport,
@@ -194,6 +187,5 @@ function checkNotAuthenticated(req, res, next) {
 
 	next();
 }
-
 
 module.exports = router;

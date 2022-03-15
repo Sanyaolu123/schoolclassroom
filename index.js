@@ -15,10 +15,11 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
 
-// Connect to local mongodb
+// Connect to mongodb
 
+require("dotenv").config();
 
-const connect = mongoose.connect("mongodb://localhost/school", {
+mongoose.connect(process.env.MONGODB_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });

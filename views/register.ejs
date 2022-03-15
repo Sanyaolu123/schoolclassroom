@@ -5,10 +5,14 @@
         <p class="text-center my-1">
       <%= title  %> 
         </p>
+        <% if(message != "") { %>
+          <% if(message == "success") { %>
+            <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center">Student Registered Successfully! <i class="fa fa-check-circle"></i></div> 
+          <% } else { %>  
+          <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+            <% } %> 
+        <% } %> 
       <form action="/register-student" class="w-100" method="POST">
-        <% if(typeof message !== "undefined" && message.length > 0) { %>
-          <%= message  %>
-        <% } %>  
         <input type="text" name="fname" placeholder="First Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
         <input type="text" name="mname" placeholder="Middle Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
         <input type="text" name="lname" placeholder="Last Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
@@ -41,13 +45,17 @@
       </div>
     </div>
       <% } %>
-      <% if(type === "teacher") { %> 
+      <% if(type == "teacher") { %> 
         <div class="class teacher bg-white rounded-lg h-auto shadow-xl p-5" style="width:300px">
           <p class="text-center my-1"><%= title  %> </p>
+          <% if(message != "") { %>
+            <% if(message == "success") { %>
+              <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center">Teacher Registered Successfully! <i class="fa fa-check-circle"></i></div> 
+            <% } else { %>  
+            <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+              <% } %> 
+          <% } %>  
           <form action="/register-teacher" class="w-100" method="post">
-            <% if(typeof message !== "undefined" && message.length > 0) { %>
-              <%= message  %>
-            <% } %>  
               <input type="text" name="fname" placeholder="First Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
               <input type="text" name="mname" placeholder="Middle Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
               <input type="text" name="lname" placeholder="Last Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
@@ -65,6 +73,32 @@
               </select>
               </div>
               <a href="/dashboard"><p class="hover:text-yellow-500 transition duration-500 text-center">Go back to dashboard</p></a>
+              <button type="submit" class="font-bold bg-yellow-400 w-100 rounded-lg py-2 text-white font-medium transition hover:bg-yellow-500 mt-3" style="width:100%;">REGISTER</button>
+          </form>
+        </div>
+      <% } %> 
+      <% if(type == "admin") { %> 
+        <div class="class teacher bg-white rounded-lg h-auto shadow-xl p-5" style="width:300px">
+          <p class="text-center my-1"><%= title  %> </p>
+          <form action="/register-admin" class="w-100 flex flex-col space-y-3" method="post">
+            <% if(message != "") { %>
+              <% if(message == "success") { %>
+                <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center">You have been Registered! <i class="fa fa-check-circle"></i></div>
+                <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-green-500 bg-green-700 text-white text-center text-xs my-1"><span>Username: <%= username  %> </span><br /> <span>Password: <%= password %> </span></div>
+              <% } else { %>  
+              <div class="p-2 border-2 w-full rounded-lg font-bold shadow-xl border-red-500 bg-red-700 text-white text-center"><%= message %> <i class="fa fa-exclamation-triangle"></i></div> 
+                <% } %> 
+            <% } %>
+              <input type="text" name="fname" placeholder="First Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
+              <input type="text" name="mname" placeholder="Middle Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
+              <input type="text" name="lname" placeholder="Last Name" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
+              <input type="date" name="dob" placeholder="Date of Birth(m-d-y)" class="border-b-2 outline-none p-2 transition focus:border-yellow-400 my-2" style="width:100%;">
+              <div class="flex space-x-2 items-center">
+                  <input type="radio" name="gender" value="male" id="male" checked> <label for="male">Male</label>
+                  <input type="radio" name="gender" value="female" id="female"> <label for="female">Female</label>
+              </div>
+
+              <a href="/"><p class="hover:text-yellow-500 transition duration-500 text-center">Go back to Homepage</p></a>
               <button type="submit" class="font-bold bg-yellow-400 w-100 rounded-lg py-2 text-white font-medium transition hover:bg-yellow-500 mt-3" style="width:100%;">REGISTER</button>
           </form>
         </div>
